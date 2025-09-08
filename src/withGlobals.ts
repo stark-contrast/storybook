@@ -1,58 +1,48 @@
-import { useEffect, useGlobals } from "storybook/preview-api";
 import type {
   Renderer,
-  StoryContext,
   PartialStoryFn as StoryFunction,
+  StoryContext,
 } from "storybook/internal/types";
 
-import { KEY } from "./constants";
+import { useEffect, useMemo, useGlobals } from "storybook/preview-api";
+import { PARAM_KEY } from "./constants";
+
+import { clearStyles, addOutlineStyles } from "./helpers";
+
+import outlineCSS from "./outlineCSS";
 
 export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
   context: StoryContext<Renderer>,
 ) => {
   const [globals] = useGlobals();
-  const myAddon = globals[KEY];
-  const canvas = context.canvasElement as ParentNode;
+
+  const isActive = [true, "true"].includes(globals[PARAM_KEY]);
 
   // Is the addon being used in the docs panel
   const isInDocs = context.viewMode === "docs";
 
+  const outlineStyles = useMemo(() => {
+    const selector = isInDocs
+      ? `#anchor--${context.id} .docs-story`
+      : ".sb-show-main";
+
+    return outlineCSS(selector);
+  }, [context.id]);
   useEffect(() => {
-    if (!isInDocs) {
-      addExtraContentToStory(canvas, {
-        myAddon,
-      });
+    const selectorId = isInDocs ? `my-addon-docs-${context.id}` : `my-addon`;
+
+    if (!isActive) {
+      clearStyles(selectorId);
+      return;
     }
-  }, [myAddon, isInDocs]);
+
+    addOutlineStyles(selectorId, outlineStyles);
+
+    return () => {
+      clearStyles(selectorId);
+    };
+  }, [isActive, outlineStyles, context.id]);
 
   return StoryFn();
 };
-
-/**
- * It's not really recommended to inject content into the canvas like this.
- * But there are use cases
- */
-function addExtraContentToStory(canvas: ParentNode, state: Object) {
-  const preElement =
-    canvas.querySelector(`[data-id="${KEY}"]`) ||
-    canvas.appendChild(document.createElement("pre"));
-
-  preElement.setAttribute("data-id", KEY);
-  preElement.setAttribute(
-    "style",
-    `
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: #eee;
-    border-radius: 3px;
-    overflow: scroll;
-  `,
-  );
-
-  preElement.innerHTML = `This snippet is injected by the withGlobals decorator.
-It updates as the user interacts with the ⚡ or Theme tools in the toolbar above.
-
-${JSON.stringify(state, null, 2)}
-`;
-}
