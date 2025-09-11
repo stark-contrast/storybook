@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "description": "Check your storybook's accessibility",
   "keywords": [
-    "storybook-addons", "accessibility", "a11y", "contrast", "wcag", "storybook-addons"
+    "storybook-addons",
+    "accessibility",
+    "a11y",
+    "contrast",
+    "wcag",
+    "storybook-addons"
   ],
   "repository": {
     "type": "git",
@@ -37,11 +42,12 @@
     "build": "tsup",
     "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "run-p build:watch \"storybook --quiet\"",
+    "start": "run-p build:watch \"storybook:quiet\"",
     "prerelease": "zx scripts/prepublish-checks.js",
     "release": "npm run build && auto shipit",
     "eject-ts": "zx scripts/eject-typescript.js",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "nodemon --watch dist --exec \"storybook dev -p 6006\"",
+    "storybook:quiet": "nodemon --watch dist --exec \"storybook dev -p 6006 --quiet\"",
     "build-storybook": "storybook build"
   },
   "dependencies": {
@@ -56,6 +62,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "auto": "^11.1.1",
     "boxen": "^7.1.1",
+    "nodemon": "^3.1.4",
     "npm-run-all2": "^6.2.3",
     "prettier": "^3.3.3",
     "prompts": "^2.4.2",
@@ -91,7 +98,15 @@
   "storybook": {
     "displayName": "Stark",
     "supportedFrameworks": [
-      "react", "vue", "angular", "web-components", "ember", "html", "svelte", "preact", "react-native"
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember",
+      "html",
+      "svelte",
+      "preact",
+      "react-native"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
   }
