@@ -336,9 +336,9 @@ export const Tool = memo(function MyAddonSelector() {
 
   useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
-      label: "Toggle Addon [8]",
+      label: "Toggle Stark [8]",
       defaultShortcut: ["8"],
-      actionName: "myaddon",
+      actionName: "stark.vision.simulator",
       showInMenu: false,
       action: toggleMyTool,
     });

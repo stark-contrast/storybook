@@ -1,14 +1,22 @@
+import React from "react";
 import { addons, types } from "storybook/manager-api";
-import { ADDON_ID, TOOL_ID } from "./constants";
+import { ADDON_ID, PANEL_ID, TOOL_ID } from "./constants";
 import { Tool } from "./components/Tool";
+import { Panel } from "./components/Panel";
 
-// Register the addon
 addons.register(ADDON_ID, () => {
-  // Register the tool
   addons.add(TOOL_ID, {
     type: types.TOOL,
-    title: "My addon",
+    title: "Stark",
     match: ({ tabId, viewMode }) => !tabId && viewMode === "story",
     render: Tool,
+  });
+
+  addons.add(PANEL_ID, {
+    type: types.PANEL,
+    title: "Stark",
+    match: ({ viewMode }) => viewMode === "story",
+    // @ts-ignore
+    render: ({ active }) => <Panel active={active} />,
   });
 });
