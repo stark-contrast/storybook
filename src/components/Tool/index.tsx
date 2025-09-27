@@ -11,70 +11,10 @@ import {
   TooltipLinkList,
   WithTooltip,
 } from "storybook/internal/components";
-import { AccessibilityIcon } from "@storybook/icons";
-import { ADDON_ID, PARAM_KEY } from "../constants";
-import { Global, styled } from "storybook/internal/theming";
-
-export const Filters: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg {...props}>
-    <defs>
-      <filter id="protanopia">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="0.152, 1.053, -0.205, 0.0, 0.0, 0.115, 0.786, 0.099, 0.0, 0.0, -0.004,
-        -0.048, 1.052, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0"
-        />
-      </filter>
-      <filter id="deuteranopia">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="0.367, 0.861, -0.228, 0.0, 0.0, 0.28, 0.673, 0.047, 0.0, 0.0, -0.012,
-        0.043, 0.969, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0"
-        />
-      </filter>
-      <filter id="tritanopia">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="1.256, -0.077, -0.179, 0.0, 0.0, -0.078, 0.931, 0.148, 0.0, 0.0, 0.005,
-        0.691, 0.304, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0"
-        />
-      </filter>
-      <filter id="achromatopsia">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="0.213, 0.715, 0.072, 0.0, 0.0, 0.213, 0.715, 0.072, 0.0, 0.0, 0.213,
-        0.715, 0.072, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0"
-        />
-      </filter>
-      <filter id="blurred">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="2.25"></feGaussianBlur>
-      </filter>
-      <filter id="ghosting">
-        <feOffset in="SourceGraphic" result="OFFSET" dx="8" dy="8" />
-        <feComponentTransfer in="SourceGraphic" result="OPACITY">
-          <feFuncA type="linear" slope="0.2" />
-        </feComponentTransfer>
-        <feMerge>
-          <feMergeNode in="OFFSET" />
-          <feMergeNode in="OPACITY" />
-        </feMerge>
-      </filter>
-      <filter id="yellowing">
-        <feColorMatrix
-          type="matrix"
-          values="1 0 0 0 0
-              -0.2 1.0 0.3 0.1 0
-              -0.1 0 1 0 0
-              0 0 0 1 0 "
-        />
-      </filter>
-    </defs>
-  </svg>
-);
+import { ADDON_ID, PARAM_KEY } from "../../constants";
+import { Global } from "storybook/internal/theming";
+import { Filters } from "./Filters";
+import Hidden from "./Hidden";
 
 const iframeId = "storybook-preview-iframe";
 
@@ -83,19 +23,27 @@ interface Option {
   percentage?: number;
 }
 
-export const baseList = [
-  { name: "deuteranopia", percentage: 0.56 },
-  { name: "protanopia", percentage: 0.59 },
-  { name: "tritanopia", percentage: 0.016 },
-  { name: "achromatopsia", percentage: 0.0001 },
-  { name: "blurred", percentage: 0.0001 },
-  { name: "ghosting", percentage: 0.0001 },
-  { name: "yellowing", percentage: 0.0001 },
-  { name: "loss of contrast", percentage: 0.0001 },
-  { name: "bright light", percentage: 0.0001 },
-] as Option[];
+export interface Link {
+  id: string;
+  title: ReactNode;
+  right?: ReactNode;
+  active: boolean;
+  onClick: () => void;
+}
 
 type Filter = Option | null;
+
+export const baseList = [
+  { name: "deuteranopia" },
+  { name: "protanopia" },
+  { name: "tritanopia" },
+  { name: "achromatopsia" },
+  { name: "blurred" },
+  { name: "ghosting" },
+  { name: "yellowing" },
+  { name: "loss of contrast" },
+  { name: "bright light" },
+] as Option[];
 
 const getFilter = (filterName: string) => {
   if (!filterName) {
@@ -110,59 +58,12 @@ const getFilter = (filterName: string) => {
   return `url('#${filterName}')`;
 };
 
-const Hidden = styled.div({
-  "&, & svg": {
-    position: "absolute",
-    width: 0,
-    height: 0,
-  },
-});
-
-const ColorIcon = styled.span<{ filter: string }>(
-  {
-    background:
-      "linear-gradient(to right, #F44336, #FF9800, #FFEB3B, #8BC34A, #2196F3, #9C27B0)",
-    borderRadius: "1rem",
-    display: "block",
-    height: "1rem",
-    width: "1rem",
-  },
-  ({ filter }) => ({
-    filter: getFilter(filter),
-  }),
-  ({ theme }) => ({
-    boxShadow: `${theme.appBorderColor} 0 0 0 1px inset`,
-  }),
-);
-
-export interface Link {
-  id: string;
-  title: ReactNode;
-  right?: ReactNode;
-  active: boolean;
-  onClick: () => void;
-}
-
-const Column = styled.span({
-  display: "flex",
-  flexDirection: "column",
-});
-
-const Title = styled.span({
-  textTransform: "capitalize",
-});
-
-const Description = styled.span(({ theme }) => ({
-  fontSize: 11,
-  color: theme.textMutedColor,
-}));
-
 const getColorList = (active: Filter, set: (i: Filter) => void): Link[] => [
   ...(active !== null
     ? [
         {
           id: "reset",
-          title: "Reset color filter",
+          title: "Reset vision simulator",
           onClick: () => {
             set(null);
           },
@@ -175,14 +76,23 @@ const getColorList = (active: Filter, set: (i: Filter) => void): Link[] => [
     return {
       id: i.name,
       title: (
-        <Column>
-          <Title>{i.name}</Title>
-        </Column>
+        <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            {getFilterIcon(i.name)}
+            <span style={{ textTransform: "capitalize" }}>{i.name}</span>
+          </div>
+        </>
       ),
       onClick: () => {
         set(i);
       },
-      right: getFilterIcon(i.name),
       active: active === i,
     };
   }),
@@ -192,8 +102,8 @@ const getFilterIcon = (filterName: string) => {
   if (filterName === "deuteranopia") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -207,8 +117,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "protanopia") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -222,8 +132,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "tritanopia") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -237,8 +147,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "achromatopsia") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -252,8 +162,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "blurred") {
     return (
       <svg
-        width="34"
-        height="34"
+        width="20"
+        height="20"
         viewBox="0 0 34 34"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -269,8 +179,8 @@ const getFilterIcon = (filterName: string) => {
             id="filter0_f_286_376"
             x="0"
             y="0"
-            width="34"
-            height="34"
+            width="20"
+            height="20"
             filterUnits="userSpaceOnUse"
             colorInterpolationFilters="sRGB"
           >
@@ -313,8 +223,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "ghosting") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -332,8 +242,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "yellowing") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -376,8 +286,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "loss of contrast") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -395,8 +305,8 @@ const getFilterIcon = (filterName: string) => {
   } else if (filterName === "bright light") {
     return (
       <svg
-        width="32"
-        height="32"
+        width="20"
+        height="20"
         viewBox="0 0 32 32"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -440,6 +350,7 @@ export const Tool = memo(function MyAddonSelector() {
         <Global
           styles={{
             [`#${iframeId}`]: {
+              // @ts-ignore
               filter: getFilter(filter.name),
             },
           }}
@@ -449,6 +360,7 @@ export const Tool = memo(function MyAddonSelector() {
         placement="top"
         tooltip={({ onHide }) => {
           const colorList = getColorList(filter, (i) => {
+            // @ts-ignore
             setFilter(i);
             onHide();
           });
@@ -462,7 +374,36 @@ export const Tool = memo(function MyAddonSelector() {
           active={!!filter}
           title="Stark Vision simulator"
         >
-          <AccessibilityIcon />
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 250 250"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ borderRadius: "100%" }}
+          >
+            <path
+              d="M0 0H250V250H0V0Z"
+              fill="rgb(115, 130, 140)"
+              className="stark-logo-bg"
+            ></path>
+            <style>
+              {`
+              .stark-logo-bg {
+                transition: fill 0.2s ease;
+              }
+              button:hover .stark-logo-bg {
+                fill: #381fd1;
+              }
+              `}
+            </style>
+            <path
+              d="M120.601 201.202V178.293C136.28 179.657 151.758 174.011 162.875 162.872C180.585 145.161 183.585 117.515 170.087 96.4185L79.9909 186.506C76.915 184.234 74.0132 181.734 71.3097 179.029C41.5634 149.286 41.5634 101.06 71.3097 71.314C86.7053 55.8855 107.986 47.8107 129.742 49.1421V72.0504C114.063 70.6862 98.585 76.3325 87.4682 87.4713C69.7586 105.182 66.7584 132.828 80.2565 153.925L170.353 63.8387C173.429 66.1113 176.331 68.6105 179.034 71.3155C208.78 101.059 208.78 149.285 179.034 179.031C163.638 194.459 142.357 202.533 120.601 201.202Z"
+              fill="#ffffff"
+              fillRule="evenodd"
+              clipRule="evenodd"
+            ></path>
+          </svg>
         </IconButton>
       </WithTooltip>
       <Hidden>
