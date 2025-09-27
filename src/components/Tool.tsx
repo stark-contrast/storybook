@@ -1,18 +1,18 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
-
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { useGlobals, useStorybookApi } from "storybook/manager-api";
 import {
   IconButton,
   TooltipLinkList,
   WithTooltip,
 } from "storybook/internal/components";
-import {
-  AccessibilityIcon,
-  ContrastIcon,
-  LightningIcon,
-} from "@storybook/icons";
-
-import { ADDON_ID, PARAM_KEY, TOOL_ID } from "../constants";
+import { AccessibilityIcon } from "@storybook/icons";
+import { ADDON_ID, PARAM_KEY } from "../constants";
 import { Global, styled } from "storybook/internal/theming";
 
 export const Filters: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (

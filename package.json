@@ -47,10 +47,11 @@
     "release": "npm run build && auto shipit",
     "eject-ts": "zx scripts/eject-typescript.js",
     "storybook": "nodemon --watch dist --exec \"storybook dev -p 6006\"",
-    "storybook:quiet": "nodemon --watch dist --exec \"storybook dev -p 6006 --quiet\"",
+    "storybook:quiet": "nodemon --watch dist --exec \"storybook dev -p 6006 --quiet --ci\"",
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@stark-contrast/shared-styles": "^4.3.5",
     "@storybook/icons": "^1.4.0"
   },
   "devDependencies": {
