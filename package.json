@@ -51,6 +51,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@stark-contrast/rule-engine": "^1.7.6",
     "@stark-contrast/shared-styles": "^4.3.5",
     "@storybook/icons": "^1.4.0"
   },

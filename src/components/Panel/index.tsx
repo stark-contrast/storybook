@@ -1,5 +1,5 @@
+import { RuleResult } from "@stark-contrast/rule-engine";
 import React, { Fragment, memo, useCallback, useState } from "react";
-import { Result } from "src/types";
 import { AddonPanel } from "storybook/internal/components";
 import { Button, Placeholder, TabsState } from "storybook/internal/components";
 import { useChannel } from "storybook/manager-api";
@@ -25,6 +25,7 @@ export const Panel = memo(function MyPanel(props) {
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel
   const emit = useChannel({
     [EVENTS.RESULT]: (newResults) => {
+      console.log("Received results", newResults);
       setState(newResults);
     },
   });
@@ -47,11 +48,10 @@ export const Panel = memo(function MyPanel(props) {
           >
             {violations && violations.length > 0 ? (
               <Placeholder>
-                <p>The following elements have a style attribute</p>
                 <List
-                  items={violations.map((item, index) => ({
-                    title: `item #${index}`,
-                    description: JSON.stringify(item, null, 2),
+                  items={violations.map((item: RuleResult, index) => ({
+                    title: item?.message || "",
+                    description: item?.elementSnippet || "",
                   }))}
                 />
               </Placeholder>
@@ -68,13 +68,27 @@ export const Panel = memo(function MyPanel(props) {
           >
             {potentials && potentials.length > 0 ? (
               <Placeholder>
-                <p>The following divs have less than 2 childNodes</p>
-                <List
-                  items={potentials.map((item, index) => ({
-                    title: `item #${index}`,
-                    description: JSON.stringify(item, null, 2),
-                  }))}
-                />
+                {potentials.map((item: RuleResult, index) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <h3
+                        style={{
+                          fontSize: 14,
+                          fontWeight: 700,
+                          textAlign: "left",
+                        }}
+                      >
+                        {item?.message}
+                      </h3>
+                    </div>
+                  );
+                })}
               </Placeholder>
             ) : (
               <Placeholder>
@@ -89,11 +103,10 @@ export const Panel = memo(function MyPanel(props) {
           >
             {passed && passed.length > 0 ? (
               <Placeholder>
-                <p>The following elements have a style attribute</p>
                 <List
                   items={passed.map((item, index) => ({
                     title: `item #${index}`,
-                    description: JSON.stringify(item, null, 2),
+                    description: item.result,
                   }))}
                 />
               </Placeholder>
