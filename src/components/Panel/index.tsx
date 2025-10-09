@@ -15,7 +15,6 @@ export const RequestDataButton = styled(Button)({
 export const Panel = memo(function MyPanel(props) {
   const theme = useTheme();
 
-  // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
   const [{ violations, potentials, passed }, setState] = useState({
     violations: [],
     potentials: [],
