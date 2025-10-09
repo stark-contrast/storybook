@@ -1,9 +1,13 @@
-import { getWcagExplainedInfo, RuleResult } from "@stark-contrast/rule-engine";
+import { RuleResult } from "@stark-contrast/rule-engine";
 import React, { memo, useCallback, useState } from "react";
-import { AddonPanel, Button, Placeholder, TabsState } from "storybook/internal/components";
+import {
+  AddonPanel,
+  Button,
+  Placeholder,
+  TabsState,
+} from "storybook/internal/components";
 import { useChannel } from "storybook/manager-api";
 import { styled, useTheme } from "storybook/theming";
-
 import { EVENTS } from "../../constants";
 import { ResultItem } from "./result-item";
 
@@ -34,6 +38,15 @@ export const Panel = memo(function MyPanel(props) {
   return (
     <AddonPanel active={props.active}>
       <>
+        <style>
+          {`
+            #panel-tab-content .sb-bar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1000;}
+            `}
+        </style>
         <TabsState
           initial="violations"
           backgroundColor={theme.background.hoverable}
