@@ -1,12 +1,11 @@
 import { getWcagExplainedInfo, RuleResult } from "@stark-contrast/rule-engine";
-import React, { Fragment, memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { AddonPanel } from "storybook/internal/components";
 import { Button, Placeholder, TabsState } from "storybook/internal/components";
 import { useChannel } from "storybook/manager-api";
 import { styled, useTheme } from "storybook/theming";
 
 import { EVENTS } from "../../constants";
-import { List } from "../List";
 
 export const RequestDataButton = styled(Button)({
   marginTop: "1rem",
@@ -25,7 +24,6 @@ export const Panel = memo(function MyPanel(props) {
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel
   const emit = useChannel({
     [EVENTS.RESULT]: (newResults) => {
-      console.log("Received results", newResults);
       setState(newResults);
     },
   });
@@ -35,7 +33,7 @@ export const Panel = memo(function MyPanel(props) {
   }, [emit]);
 
   return (
-    <AddonPanel active={true}>
+    <AddonPanel active={props.active}>
       <>
         <TabsState
           initial="violations"
