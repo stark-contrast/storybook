@@ -1,7 +1,6 @@
 import { getWcagExplainedInfo, RuleResult } from "@stark-contrast/rule-engine";
 import React, { memo, useCallback, useState } from "react";
-import { AddonPanel } from "storybook/internal/components";
-import { Button, Placeholder, TabsState } from "storybook/internal/components";
+import { AddonPanel, Button, Placeholder, TabsState } from "storybook/internal/components";
 import { useChannel } from "storybook/manager-api";
 import { styled, useTheme } from "storybook/theming";
 
