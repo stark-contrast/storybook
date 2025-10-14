@@ -1,14 +1,13 @@
 {
   "name": "storybook-addon-stark",
   "version": "0.1.0",
-  "description": "Check your storybook's accessibility",
+  "description": "Use Stark to check your storybook's accessibility.",
   "keywords": [
     "storybook-addons",
     "accessibility",
     "a11y",
     "contrast",
-    "wcag",
-    "storybook-addons"
+    "wcag"
   ],
   "repository": {
     "type": "git",
@@ -101,6 +100,6 @@
       "preact",
       "react-native"
     ],
-    "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
+    "icon": "https://images.getstark.co/logos/stark-logo-256.png?updatedAt=1616000707628"
   }
 }
