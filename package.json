@@ -42,19 +42,14 @@
     "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "run-p build:watch \"storybook:quiet\"",
-    "prerelease": "zx scripts/prepublish-checks.js",
     "release": "npm run build && auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.js",
     "storybook": "nodemon --watch dist --exec \"storybook dev -p 6006\"",
     "storybook:quiet": "nodemon --watch dist --exec \"storybook dev -p 6006 --quiet --ci\"",
     "build-storybook": "storybook build"
   },
-  "dependencies": {
-    "@stark-contrast/rule-engine": "^1.7.6",
-    "@stark-contrast/shared-styles": "^4.3.5",
-    "@storybook/icons": "^1.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@stark-contrast/rule-engine": "^1.7.6",
     "@storybook/addon-docs": "^9.1.0",
     "@storybook/react-vite": "^9.1.0",
     "@types/node": "^22",
@@ -91,9 +86,6 @@
     ],
     "previewEntries": [
       "src/preview.ts"
-    ],
-    "nodeEntries": [
-      "src/preset.ts"
     ]
   },
   "storybook": {
