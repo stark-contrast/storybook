@@ -1,5 +1,5 @@
 {
-  "name": "storybook-addon-stark",
+  "name": "@stark-lab-inc/storybook-addon-stark",
   "version": "0.4.0",
   "description": "Use Stark to check your storybook's accessibility.",
   "keywords": [
@@ -15,7 +15,7 @@
   },
   "type": "module",
   "license": "MIT",
-  "author": "Stark <dev@getstark.co>",
+  "author": "mfouquet",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
