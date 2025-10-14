@@ -1,7 +1,7 @@
 {
   "name": "storybook-addon-stark",
-  "version": "0.0.0",
-  "description": "Check your storybook's accessibility",
+  "version": "0.1.0",
+  "description": "Check the accessibility of your Storybook stories with Stark, the addon for accessibility testing and WCAG compliance.",
   "keywords": [
     "storybook-addons",
     "accessibility",
@@ -10,13 +10,14 @@
     "wcag",
     "storybook-addons"
   ],
+  "homepage": "https://www.getstark.co",
   "repository": {
     "type": "git",
     "url": "https://github.com/stark-contrast/storybook"
   },
   "type": "module",
   "license": "MIT",
-  "author": "Stark <dev@getstark.co>",
+  "author": "mfouquet",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -28,7 +29,6 @@
       "import": "./dist/preview.js",
       "require": "./dist/preview.cjs"
     },
-    "./preset": "./dist/preset.cjs",
     "./manager": "./dist/manager.js",
     "./package.json": "./package.json"
   },
@@ -110,6 +110,6 @@
       "preact",
       "react-native"
     ],
-    "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
+    "icon": "https://images.getstark.co/logos/stark-logo-256.png?updatedAt=1616000707628"
   }
 }
