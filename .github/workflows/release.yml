@@ -25,6 +25,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install --ignore-scripts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         env:
