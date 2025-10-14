@@ -1,9 +1,14 @@
 {
   "name": "storybook-addon-stark",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Check your storybook's accessibility",
   "keywords": [
-    "storybook-addons", "accessibility", "a11y", "contrast", "wcag", "storybook-addons"
+    "storybook-addons",
+    "accessibility",
+    "a11y",
+    "contrast",
+    "wcag",
+    "storybook-addons"
   ],
   "repository": {
     "type": "git",
@@ -23,7 +28,6 @@
       "import": "./dist/preview.js",
       "require": "./dist/preview.cjs"
     },
-    "./preset": "./dist/preset.cjs",
     "./manager": "./dist/manager.js",
     "./package.json": "./package.json"
   },
@@ -37,17 +41,15 @@
     "build": "tsup",
     "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "run-p build:watch \"storybook --quiet\"",
-    "prerelease": "zx scripts/prepublish-checks.js",
+    "start": "run-p build:watch \"storybook:quiet\"",
     "release": "npm run build && auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.js",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "nodemon --watch dist --exec \"storybook dev -p 6006\"",
+    "storybook:quiet": "nodemon --watch dist --exec \"storybook dev -p 6006 --quiet --ci\"",
     "build-storybook": "storybook build"
   },
-  "dependencies": {
-    "@storybook/icons": "^1.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@stark-contrast/rule-engine": "^1.7.6",
     "@storybook/addon-docs": "^9.1.0",
     "@storybook/react-vite": "^9.1.0",
     "@types/node": "^22",
@@ -56,6 +58,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "auto": "^11.1.1",
     "boxen": "^7.1.1",
+    "nodemon": "^3.1.4",
     "npm-run-all2": "^6.2.3",
     "prettier": "^3.3.3",
     "prompts": "^2.4.2",
@@ -83,15 +86,20 @@
     ],
     "previewEntries": [
       "src/preview.ts"
-    ],
-    "nodeEntries": [
-      "src/preset.ts"
     ]
   },
   "storybook": {
     "displayName": "Stark",
     "supportedFrameworks": [
-      "react", "vue", "angular", "web-components", "ember", "html", "svelte", "preact", "react-native"
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember",
+      "html",
+      "svelte",
+      "preact",
+      "react-native"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
   }
