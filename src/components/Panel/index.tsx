@@ -36,6 +36,7 @@ export const Panel = memo(function MyPanel(props) {
   }, [emit]);
 
   return (
+    // @ts-ignore
     <AddonPanel active={props.active}>
       <>
         <style>
