@@ -1,6 +1,6 @@
 {
   "name": "@stark-lab-inc/storybook-addon-stark",
-  "version": "0.4.0",
+  "version": "0.5.1",
   "description": "Use Stark to check your storybook's accessibility.",
   "keywords": [
     "storybook-addons",
@@ -41,7 +41,6 @@
     "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "run-p build:watch \"storybook:quiet\"",
-    "release": "npm run build && auto shipit",
     "storybook": "nodemon --watch dist --exec \"storybook dev -p 6006\"",
     "storybook:quiet": "nodemon --watch dist --exec \"storybook dev -p 6006 --quiet --ci\"",
     "build-storybook": "storybook build"
@@ -55,7 +54,6 @@
     "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.21",
     "@vitejs/plugin-react": "^4.2.1",
-    "auto": "^11.1.1",
     "boxen": "^7.1.1",
     "nodemon": "^3.1.4",
     "npm-run-all2": "^6.2.3",
