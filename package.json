@@ -1,6 +1,6 @@
 {
   "name": "@stark-lab-inc/storybook-addon-stark",
-  "version": "0.4.1",
+  "version": "0.5.1",
   "description": "Use Stark to check your storybook's accessibility.",
   "keywords": [
     "storybook-addons",
