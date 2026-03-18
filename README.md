@@ -35,7 +35,10 @@ export default {
 
 ## Usage
 
-There's two main ways to use the Stark addon:
+There's three main ways to use the Stark addon:
+
+### CLI
+1. Use the CLI to scan all of your stories and send the results up to Stark. More details can be found on our [support site](https://www.getstark.co/support/getting-started/using-storybook-addon/#main).
 
 ### Vision Simulator
 
