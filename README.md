@@ -17,11 +17,11 @@
 ## Installation
 
 ```sh
-yarn add -D storybook-addon-stark
+yarn add -D @stark-lab-inc/storybook-addon-stark
 ```
 
 ```sh
-npm install -D storybook-addon-stark
+npm install -D @stark-lab-inc/storybook-addon-stark
 ```
 
 In your `.storybook/main.ts` file, add the following:
@@ -29,7 +29,7 @@ In your `.storybook/main.ts` file, add the following:
 ```ts
 // .storybook/main.ts
 export default {
-  addons: ["storybook-addon-stark"],
+  addons: ["@stark-lab-inc/storybook-addon-stark"],
 };
 ```
 
